@@ -16,14 +16,13 @@ router.get('/', async (req: Request, res: Response) => {
     res.send(items);
 });
 
-//@TODO
-//Add an endpoint to GET a specific resource by Primary Key
+// Add an endpoint to GET a specific resource by Primary Key
 // using routing parameters
 router.get('/:pk', async (req: Request, res: Response) => {
     let { pk } = req.params;
     const item = await FeedItem.findByPk(pk);
-    if (item == null) {
-        return res.status(404).send('Record not found');
+    if (!item) {
+        return res.status(404).send('Feeditem not found');
     }
     res.status(200).send(item);
 });
@@ -32,8 +31,23 @@ router.get('/:pk', async (req: Request, res: Response) => {
 router.patch('/:id', 
     requireAuth, 
     async (req: Request, res: Response) => {
-        //@TODO try it yourself
-        res.send(500).send("not implemented")
+        let { id } = req.params;
+        const item = await FeedItem.findByPk(id);
+        if (item) {
+            let { caption, url } = req.body; 
+            if (caption) {
+                item.caption = caption;
+            }
+            if (url) {
+                item.url = url;
+            }
+            // Save the item
+            await item.save();
+            return res.status(200).send(item);
+        }
+        else {
+            return res.status(404).send('Feeditem not found');
+        }
 });
 
 
