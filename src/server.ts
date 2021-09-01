@@ -18,7 +18,7 @@ import { V0MODELS } from './controllers/v0/model.index';
 
   //CORS Should be restricted
   app.use(function(req, res, next) {
-    const allowedOrigins = ['http://localhost:8100', 'http://udagram-teh-dev-frontend.s3-website-us-east-1.amazonaws.com'];
+    const allowedOrigins = ['http://localhost:8100', 'http://udagram-teh-dev-frontend.s3-website-us-east-1.amazonaws.com', 'http://dpcotgs9i2ee1.cloudfront.net', 'https://dpcotgs9i2ee1.cloudfront.net'];
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
          res.setHeader('Access-Control-Allow-Origin', origin);
